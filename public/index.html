@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <title>Cheeze Board</title>
+</head>
+<body>
+<div class= "container">
+    <div class= "row">
+        <div class= "span12"><h1>Keen Cheeze Board</h1></div>
+        <div class= "span12"><h2>Time series data</h2></div>
+        <div class= "span12"><div id= "line"></div></h2></div>
+        <div class= span6>
+            <h3>Hourly unique visitors</h3>
+             <div id="uniHours"></div>
+        </div>
+        <div class= "span6">
+            <h3>Daily unique visitors</h3>
+            <div id="uniDays"></div>
+        </div>
+        <div class= "span6">
+            <h3>Table clicks per day</h3>
+            <div id="clicksPerDay"></div>
+        </div>
+        <div class= "span6">
+            <h3>Avg main table clicks per user per day</h3>
+            <div id="postsPerDay"></div>
+        </div>
+        <!--<div class= "span6">
+            <h3>Table clicks by unique</h3>
+            <div id="userPie"></div>
+        </div>-->
+<!-- ************ Start of Metrics ********** -->
+
+        <div class= "span12"><h2>Activity counts over last 5 days</h2></div>
+        <div class= "span4">
+            <h3>Main table clicks</h3>
+            <div id="tableClicks"></div>
+        </div>
+        <div class= "span4">
+            <h3>Arrow clicks</h3>
+            <div id="arrowClicks"></div>
+        </div>
+        <div class= "span4">
+            <h3>Conversation table clicks</h3>
+            <div id="commentClicks"></div>
+        </div>
+        <div class= "span4">
+            <h3>Record button clicks</h3>
+            <div id="recorded"></div>
+        </div>
+        <div class= "span4">
+            <h3>Post 1 button clicks</h3>
+            <div id="almost"></div>
+        </div>
+        <div class= "span4">
+            <h3>Post button 2 clicks (actual posts)</h3>
+            <div id="posted"></div>
+        </div>
+        <div class= "span4">
+            <h3>Direct message clicks</h3>
+            <div id="dm"></div>
+        </div>
+        <div class= "span4">
+            <h3>Reply button clicks</h3>
+            <div id="reply"></div>
+        </div>
+        <div class= "span4">
+            <h3>Sub reply clicks</h3>
+            <div id="subReply"></div>
+        </div>
+        <div class= "span4">
+            <h3>Refresh button clicks</h3>
+            <div id="refresh"></div>
+        </div>
+        <div class= "span4">
+            <h3>Record tab clicks</h3>
+            <div id="recordTab"></div>
+        </div>
+        <div class= "span4">
+            <h3>Main table deletes</h3>
+            <div id="delete"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script> Keen.configure("50a3e111384331363f000003", "3832b5a1f8984edebc8b337a3143cb97")</script>
+<script>
+    //Series. This function defines the arguments for the keen series, which are displayed as line charts
+    /*Keen.onChartsReady(function(){
+            //Create a Metric for the number of logins each user has performed in the last 7 days.
+            var myMetric = new Keen.Metric("postButtun2Clicks", {
+                analysisType: "count",
+                timeframe: "this_5_days",
+                groupBy: "FB_ID"
+            });
+            //Create a PieChart visualization for that Metric.
+            myMetric.addFilter("FB_ID", "ne", "418133");//Shahsi
+            myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
+            myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
+            myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+
+            var myPieChart = new Keen.PieChart(myMetric, {
+                height: 300,
+                width: 600,
+                title: "Clicks by User"
+            });
+            //Draw the visualization into a div
+            myPieChart.draw(document.getElementById("userPie"));
+
+        });*/
+    //Series. This function defines the arguments for the keen series, which are displayed as line charts
+    function series(metricName, analysisType, targetProperty, timeFrame, interval,  label, divName){
+        var mySeries = new Keen.Series(metricName, {
+            analysisType: analysisType,
+            targetProperty:targetProperty,
+            timeframe: timeFrame,
+            interval: interval
+        });
+        mySeries.addFilter("FB_ID", "ne", "418133");//Shahsi
+        mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
+        mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
+        mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+
+        Keen.onChartsReady(function(){
+            mySeries.draw(document.getElementById(divName), {
+                label: label
+            });
+        });
+    };
+    //Hourly uniques
+    Keen.onChartsReady(function(){
+        series("TableViewClick", "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours")
+    });
+
+    //Daily uniques
+    Keen.onChartsReady(function(){
+        series("TableViewClick", "count_unique", "FB_ID", "this_5_days", "daily",  "Daily Uniques", "uniDays")
+    });
+
+    //Average table clicks per user day
+    Keen.onChartsReady(function(){
+        series("TableViewClick", "count", null, "this_5_days", "daily",  "Daily Activity", "clicksPerDay")
+    });
+
+    Keen.onChartsReady(function(){
+        series("postButton2Click", "count", null, "this_5_days", "daily",  "Daily Posts", "postsPerDay")
+    });
+
+    //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
+    function metrics(metricName, target, analysisType, label, divName){
+        var myMetric = new Keen.Metric(metricName, {
+            analysisType: analysisType,
+            targetProperty: target,
+            timeframe: "this_5_days"
+        });
+        myMetric.addFilter("FB_ID", "ne", "418133");//Shashi
+        myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
+        myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
+        myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+
+
+        var myNumberVisualization = new Keen.Number(myMetric, {
+            height: "160px",
+            width: "260px",
+            label: label
+        });
+
+        Keen.onChartsReady(function(){
+            myNumberVisualization.draw(document.getElementById(divName));
+        });
+    };
+
+    //These numbers show different button clicks (in both total count and number of uniques)
+
+    //Main table
+    Keen.onChartsReady(function() {
+        metrics("TableViewClick", null, "count", "total clicks", "tableClicks");
+    });
+    Keen.onChartsReady(function() {
+        metrics("TableViewClick", "FB_ID", "count_unique", "uniques", "tableClicks");
+    });
+
+    //Row Arrow
+    Keen.onChartsReady(function() {
+        metrics("arrowClick", null, "count", "total clicks", "arrowClicks");
+    });
+    Keen.onChartsReady(function() {
+        metrics("arrowClick", "FB_ID", "count_unique", "uniques", "arrowClicks");
+    });
+
+    //Conversation Table Clicks
+    Keen.onChartsReady(function() {
+        metrics("commentTableClick", null, "count", "total clicks", "commentClicks");
+    });
+    Keen.onChartsReady(function() {
+        metrics("commentTableClick", "FB_ID", "count_unique", "uniques", "commentClicks");
+    });
+
+    //Record button clicks
+    Keen.onChartsReady(function() {
+        metrics("recordButtonClick", null, "count", "total clicks", "recorded");
+    });
+    Keen.onChartsReady(function() {
+        metrics("recordButtonClick", "FB_ID", "count_unique", "uniques", "recorded");
+    });
+
+    //Post button1 clicks
+    Keen.onChartsReady(function() {
+        metrics("postButtonClick", null, "count", "total clicks", "almost");
+    });
+    Keen.onChartsReady(function() {
+        metrics("postButtonClick", "FB_ID", "count_unique", "uniques", "almost");
+    });
+
+    //Post button2 clicks
+    Keen.onChartsReady(function() {
+        metrics("postButton2Click", null, "count", "total clicks", "posted");
+    });
+    Keen.onChartsReady(function() {
+        metrics("postButton2Click", "FB_ID", "count_unique", "uniques", "posted");
+    });
+
+    //Direct message clicks
+    Keen.onChartsReady(function() {
+        metrics("DMClick", null, "count", "total clicks", "dm");
+    });
+    Keen.onChartsReady(function() {
+        metrics("DMClick", "FB_ID", "count_unique", "uniques", "dm");
+    });
+
+    //Reply clicks
+    Keen.onChartsReady(function() {
+        metrics("replyClick", null, "count", "total clicks", "reply");
+    });
+    Keen.onChartsReady(function() {
+        metrics("replyClick", "FB_ID", "count_unique", "uniques", "reply");
+    });
+
+    //Sub Reply clicks
+    Keen.onChartsReady(function() {
+        metrics("subReplyClick", null, "count", "total clicks", "subReply");
+    });
+    Keen.onChartsReady(function() {
+        metrics("subReplyClick", "FB_ID", "count_unique", "uniques", "subReply");
+    });
+
+    //Refresh button clicks
+    Keen.onChartsReady(function() {
+        metrics("refreshClick", null, "count", "total clicks", "refresh");
+    });
+    Keen.onChartsReady(function() {
+        metrics("refreshClick", "FB_ID", "count_unique", "uniques", "refresh");
+    });
+
+    //Record tab clicks
+    Keen.onChartsReady(function() {
+        metrics("blurrb", null, "count", "total clicks", "recordTab");
+    });
+    /*Keen.onChartsReady(function() {
+        metrics("blurrb", "FB_ID", "count_unique", "uniques", "recordTab");
+    });*/
+
+    //Deletes
+    Keen.onChartsReady(function() {
+        metrics("deleteTableView", null, "count", "total clicks", "delete");
+    });
+    Keen.onChartsReady(function() {
+        metrics("deleteTableView", "FB_ID", "count_unique", "uniques", "delete");
+    });
+</script>
+</body>
+</html>
