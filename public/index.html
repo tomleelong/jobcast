@@ -125,13 +125,12 @@
 
         });*/
     //Series. This function defines the arguments for the keen series, which are displayed as line charts
-    function series(metricName, analysisType, targetProperty, timeFrame, interval,  label, divName){
+    function series(metricName, analysisType, targetProperty, timeFrame, interval,  label, divName, color){
         var mySeries = new Keen.Series(metricName, {
             analysisType: analysisType,
             targetProperty:targetProperty,
             timeframe: timeFrame,
-            interval: interval,
-            marginLeft: "0px"
+            interval: interval
         });
         mySeries.addFilter("FB_ID", "ne", "418133");//Shahsi
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
@@ -140,27 +139,32 @@
 
         Keen.onChartsReady(function(){
             mySeries.draw(document.getElementById(divName), {
-                label: label
+                label: label,
+                color: color,
+                chartAreaLeft: "0%",
+                chartAreaRight: "5%",
+                chartAreaWidth: "70%",
+                chartAreaHeight: "75%"
             });
         });
     };
     //Hourly uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours")
+        series("TableViewClick", "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours", "orange")
     });
 
     //Daily uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_5_days", "daily",  "Daily Uniques", "uniDays")
+        series("TableViewClick", "count_unique", "FB_ID", "this_5_days", "daily",  "Daily Uniques", "uniDays", "blue")
     });
 
     //Average table clicks per user day
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count", null, "this_5_days", "daily",  "Daily Activity", "clicksPerDay")
+        series("TableViewClick", "count", null, "this_5_days", "daily",  "Daily Activity", "clicksPerDay", "green")
     });
 
     Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_5_days", "daily",  "Daily Posts", "postsPerDay")
+        series("postButton2Click", "count", null, "this_5_days", "daily",  "Daily Posts", "postsPerDay", "red")
     });
 
     //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
