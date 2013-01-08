@@ -29,11 +29,11 @@
             <div id="uniDays"></div>
         </div>
         <div class= "span6">
-            <h3>Table clicks per day</h3>
+            <h3>Main table clicks per day</h3>
             <div id="clicksPerDay"></div>
         </div>
         <div class= "span6">
-            <h3>Avg main table clicks per user per day</h3>
+            <h3>Fan posts per day</h3>
             <div id="postsPerDay"></div>
         </div>
         <!--<div class= "span6">
@@ -130,7 +130,8 @@
             analysisType: analysisType,
             targetProperty:targetProperty,
             timeframe: timeFrame,
-            interval: interval
+            interval: interval,
+            marginLeft: "0px"
         });
         mySeries.addFilter("FB_ID", "ne", "418133");//Shahsi
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
