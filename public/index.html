@@ -3,7 +3,7 @@
 <head>
 <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Keen Cheeze Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -42,7 +42,7 @@
         </div>-->
 <!-- ************ Start of Metrics ********** -->
 
-        <div class= "span12"><h2>Activity counts over last 5 days</h2></div>
+        <div class= "span12"><h2>Activity counts over last 6 days</h2></div>
         <div class= "span4">
             <h3>Main table clicks</h3>
             <div id="tableClicks"></div>
@@ -136,6 +136,7 @@
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
         mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
         mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+        mySeries.addFilter("FB_ID", "ne", "648647628");//Seth
 
         Keen.onChartsReady(function(){
             mySeries.draw(document.getElementById(divName), {
@@ -143,8 +144,8 @@
                 color: color,
                 chartAreaLeft: "5%",
                 chartAreaRight: "5%",
-                //chartAreaWidth: "60%",
-                //chartAreaHeight: "75%"
+                chartAreaWidth: "60%",
+                chartAreaHeight: "75%"
             });
         });
     };
@@ -155,16 +156,16 @@
 
     //Daily uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_5_days", "daily",  "Daily Uniques", "uniDays", "blue")
+        series("TableViewClick", "count_unique", "FB_ID", "this_6_days", "daily",  "Daily Uniques", "uniDays", "blue")
     });
 
     //Average table clicks per user day
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count", null, "this_5_days", "daily",  "Daily Activity", "clicksPerDay", "green")
+        series("TableViewClick", "count", null, "this_6_days", "daily",  "Daily Activity", "clicksPerDay", "green")
     });
 
     Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_5_days", "daily",  "Daily Posts", "postsPerDay", "red")
+        series("postButton2Click", "count", null, "this_6_days", "daily",  "Daily Posts", "postsPerDay", "red")
     });
 
     //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
@@ -172,13 +173,13 @@
         var myMetric = new Keen.Metric(metricName, {
             analysisType: analysisType,
             targetProperty: target,
-            timeframe: "this_5_days"
+            timeframe: "this_6_days"
         });
         myMetric.addFilter("FB_ID", "ne", "418133");//Shashi
         myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
         myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
         myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-
+        myMetric.addFilter("FB_ID", "ne", "648647628");//Seth
 
         var myNumberVisualization = new Keen.Number(myMetric, {
             height: "160px",
@@ -197,6 +198,7 @@
     Keen.onChartsReady(function() {
         metrics("TableViewClick", null, "count", "total clicks", "tableClicks");
     });
+
     Keen.onChartsReady(function() {
         metrics("TableViewClick", "FB_ID", "count_unique", "uniques", "tableClicks");
     });
