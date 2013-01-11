@@ -42,7 +42,7 @@
         </div>-->
 <!-- ************ Start of Metrics ********** -->
 
-        <div class= "span12"><h2>Activity counts over last 6 days</h2></div>
+        <div class= "span12"><h2>Activity counts over last 10 days</h2></div>
         <div class= "span4">
             <h3>Main table clicks</h3>
             <div id="tableClicks"></div>
@@ -136,7 +136,11 @@
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
         mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
         mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        mySeries.addFilter("FB_ID", "ne", "648647628");//Seth
+        mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+        mySeries.addFilter("FB_ID", "ne", null);//Sam Jones
+
+
+
 
         Keen.onChartsReady(function(){
             mySeries.draw(document.getElementById(divName), {
@@ -156,16 +160,16 @@
 
     //Daily uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_6_days", "daily",  "Daily Uniques", "uniDays", "blue")
+        series("TableViewClick", "count_unique", "FB_ID", "this_10_days", "daily",  "Daily Uniques", "uniDays", "blue")
     });
 
     //Average table clicks per user day
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count", null, "this_6_days", "daily",  "Daily Activity", "clicksPerDay", "green")
+        series("TableViewClick", "count", null, "this_10_days", "daily",  "Daily Activity", "clicksPerDay", "green")
     });
 
     Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_6_days", "daily",  "Daily Posts", "postsPerDay", "red")
+        series("postButton2Click", "count", null, "this_10_days", "daily",  "Daily Posts", "postsPerDay", "red")
     });
 
     //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
@@ -173,13 +177,14 @@
         var myMetric = new Keen.Metric(metricName, {
             analysisType: analysisType,
             targetProperty: target,
-            timeframe: "this_6_days"
+            timeframe: "this_10_days"
         });
         myMetric.addFilter("FB_ID", "ne", "418133");//Shashi
         myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
         myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
         myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        myMetric.addFilter("FB_ID", "ne", "648647628");//Seth
+        myMetric.addFilter("FB_ID", "ne", null);//Sam Jones
+
 
         var myNumberVisualization = new Keen.Number(myMetric, {
             height: "160px",
