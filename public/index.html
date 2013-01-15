@@ -3,7 +3,6 @@
 <head>
 <head>
     <meta charset="utf-8">
-    <title>Keen Cheeze Board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -12,37 +11,42 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
-    <title>Cheeze Board</title>
+    <title>Hasslehoffalytics by Keen</title>
 </head>
 <body>
 <div class= "container">
     <div class= "row">
-        <div class= "span12"><h1>Keen Cheeze Board</h1></div>
+        <div class= "span12"><h1>Hasslehoffalytics</h1></div>
+        <div class= img><img src="../images/hoff.jpeg"></div>
         <div class= "span12"><h2>Time series data</h2></div>
         <div class= "span12"><div id= "line"></div></h2></div>
         <div class= span6>
-            <h3>Hourly unique visitors</h3>
+            <h3>Hourly uniques who played a clip</h3>
              <div id="uniHours"></div>
         </div>
         <div class= "span6">
-            <h3>Daily unique visitors</h3>
+            <h3>Daily unique who played a clip</h3>
             <div id="uniDays"></div>
         </div>
         <div class= "span6">
-            <h3>Main table clicks per day</h3>
+            <h3>Main table clips played per day</h3>
             <div id="clicksPerDay"></div>
         </div>
         <div class= "span6">
             <h3>Fan posts per day</h3>
             <div id="postsPerDay"></div>
         </div>
-        <!--<div class= "span6">
-            <h3>Table clicks by unique</h3>
+        <div class= "span6">
+            <h3>Fan posts per day</h3>
+            <div id="artistPostsPerDay"></div>
+        </div>
+        <div class= "span6">
+            <h3>App version</h3>
             <div id="userPie"></div>
-        </div>-->
+        </div>
 <!-- ************ Start of Metrics ********** -->
 
-        <div class= "span12"><h2>Activity counts over last 10 days</h2></div>
+        <div class= "span12"><h2>Activity counts over last 2 weeks</h2></div>
         <div class= "span4">
             <h3>Main table clicks</h3>
             <div id="tableClicks"></div>
@@ -84,10 +88,6 @@
             <div id="refresh"></div>
         </div>
         <div class= "span4">
-            <h3>Record tab clicks</h3>
-            <div id="recordTab"></div>
-        </div>
-        <div class= "span4">
             <h3>Main table deletes</h3>
             <div id="delete"></div>
         </div>
@@ -102,12 +102,12 @@
 <script> Keen.configure("50a3e111384331363f000003", "3832b5a1f8984edebc8b337a3143cb97")</script>
 <script>
     //Series. This function defines the arguments for the keen series, which are displayed as line charts
-    /*Keen.onChartsReady(function(){
+    Keen.onChartsReady(function(){
             //Create a Metric for the number of logins each user has performed in the last 7 days.
-            var myMetric = new Keen.Metric("postButtun2Clicks", {
+            var myMetric = new Keen.Metric("appOpened", {
                 analysisType: "count",
                 timeframe: "this_5_days",
-                groupBy: "FB_ID"
+                groupBy: "22version"
             });
             //Create a PieChart visualization for that Metric.
             myMetric.addFilter("FB_ID", "ne", "418133");//Shahsi
@@ -123,7 +123,7 @@
             //Draw the visualization into a div
             myPieChart.draw(document.getElementById("userPie"));
 
-        });*/
+        });
     //Series. This function defines the arguments for the keen series, which are displayed as line charts
     function series(metricName, analysisType, targetProperty, timeFrame, interval,  label, divName, color){
         var mySeries = new Keen.Series(metricName, {
@@ -136,7 +136,9 @@
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
         mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
         mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+        mySeries.addFilter("FB_ID", "ne", null);//Before ID
         mySeries.addFilter("FB_ID", "ne", "100005051853274");//SJ other
+        //mySeries.addFilter("FB_ID", "eq", "1503606443");//Beatrice
 
 
         Keen.onChartsReady(function(){
@@ -152,21 +154,21 @@
     };
     //Hourly uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours", "orange")
+        series("TableViewClick" , "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours", "orange")
     });
 
     //Daily uniques
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count_unique", "FB_ID", "this_10_days", "daily",  "Daily Uniques", "uniDays", "blue")
+        series(("TableViewClick" || "refreshClick"), "count_unique", "FB_ID", "this_14_days", "daily",  "Daily Uniques", "uniDays", "blue")
     });
 
     //Average table clicks per user day
     Keen.onChartsReady(function(){
-        series("TableViewClick", "count", null, "this_10_days", "daily",  "Daily Activity", "clicksPerDay", "green")
+        series(("TableViewClick" || "commentTableClick" || "refreshClick"), "count", null, "this_14_days", "daily",  "Daily Activity", "clicksPerDay", "green")
     });
 
     Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_10_days", "daily",  "Daily Posts", "postsPerDay", "red")
+        series("postButton2Click", "count", null, "this_14_days", "daily",  "Daily Posts", "postsPerDay", "red")
     });
 
     //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
@@ -174,13 +176,16 @@
         var myMetric = new Keen.Metric(metricName, {
             analysisType: analysisType,
             targetProperty: target,
-            timeframe: "this_10_days"
+            timeframe: "this_14_days"
         });
         myMetric.addFilter("FB_ID", "ne", "418133");//Shashi
         myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
         myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
         myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
+        myMetric.addFilter("FB_ID", "ne", null);//before ID
         myMetric.addFilter("FB_ID", "ne", "100005051853274");//SJ other app
+        //myMetric.addFilter("FB_ID", "eq", "1503606443");//Beatrice
+
 
         var myNumberVisualization = new Keen.Number(myMetric, {
             height: "160px",
@@ -278,7 +283,7 @@
 
     //Record tab clicks
     Keen.onChartsReady(function() {
-        metrics("blurrb", null, "count", "total clicks", "recordTab");
+        metrics("appOpened", null, "count", "total clicks", "recordTab");
     });
 
     //Deletes
