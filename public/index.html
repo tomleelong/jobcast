@@ -136,10 +136,7 @@
         mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
         mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
         mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        mySeries.addFilter("FB_ID", "ne", null);//Sam Jones
-
-
+        mySeries.addFilter("FB_ID", "ne", "100005051853274");//SJ other
 
 
         Keen.onChartsReady(function(){
@@ -183,8 +180,7 @@
         myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
         myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
         myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        myMetric.addFilter("FB_ID", "ne", null);//Sam Jones
-
+        myMetric.addFilter("FB_ID", "ne", "100005051853274");//SJ other app
 
         var myNumberVisualization = new Keen.Number(myMetric, {
             height: "160px",
@@ -284,9 +280,6 @@
     Keen.onChartsReady(function() {
         metrics("blurrb", null, "count", "total clicks", "recordTab");
     });
-    /*Keen.onChartsReady(function() {
-        metrics("blurrb", "FB_ID", "count_unique", "uniques", "recordTab");
-    });*/
 
     //Deletes
     Keen.onChartsReady(function() {
