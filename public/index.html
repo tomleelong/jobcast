@@ -42,7 +42,7 @@
         </div>
 <!-- ************ Start of Metrics ********** -->
 
-        <div class= "span12"><h2>Activity counts over last 2 weeks</h2></div>
+<!--        <div class= "span12"><h2>Activity counts over last 2 weeks</h2></div>
         <div class= "span4">
             <h3>Main table clicks</h3>
             <div id="tableClicks"></div>
@@ -86,7 +86,7 @@
         <div class= "span4">
             <h3>Main table deletes</h3>
             <div id="delete"></div>
-        </div>
+        </div>-->
     </div>
 </div>
 
@@ -155,16 +155,16 @@
 
     //Daily uniques
     Keen.onChartsReady(function(){
-        series(("TableViewClick" || "refreshClick"), "count_unique", "FB_ID", "this_14_days", "daily",  "Daily Uniques", "uniDays", "blue")
+        series(("TableViewClick" || "refreshClick"), "count_unique", "FB_ID", "this_21_days", "daily",  "Daily Uniques", "uniDays", "blue")
     });
 
     //Average table clicks per user day
     Keen.onChartsReady(function(){
-        series(("TableViewClick" || "commentTableClick" || "refreshClick"), "count", null, "this_14_days", "daily",  "Daily Activity", "clicksPerDay", "green")
+        series(("TableViewClick" || "commentTableClick" || "refreshClick"), "count", null, "this_21_days", "daily",  "Daily Activity", "clicksPerDay", "green")
     });
 
     Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_14_days", "daily",  "Daily Posts", "postsPerDay", "red")
+        series("postButton2Click", "count", null, "this_21_days", "daily",  "Daily Posts", "postsPerDay", "red")
     });
 
     //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
@@ -197,7 +197,7 @@
     //These numbers show different button clicks (in both total count and number of uniques)
 
     //Main table
-    Keen.onChartsReady(function() {
+/*    Keen.onChartsReady(function() {
         metrics("TableViewClick", null, "count", "total clicks", "tableClicks");
     });
 
@@ -288,7 +288,7 @@
     });
     Keen.onChartsReady(function() {
         metrics("deleteTableView", "FB_ID", "count_unique", "uniques", "delete");
-    });
+    });*/
 </script>
 </body>
 </html>
