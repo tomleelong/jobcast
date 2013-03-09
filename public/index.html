@@ -29,6 +29,10 @@
             <div id="uniDays"></div>
         </div>
         <div class= "span6">
+            <h3>Weekly uniques (appOpened)</h3>
+            <div id="uniWeeks"></div>
+        </div>
+        <div class= "span6">
             <h3>Recordings played per day (commentTableClicks)</h3>
             <div id="clicksPerDay"></div>
         </div>
@@ -161,6 +165,11 @@
     //Daily uniques
     Keen.onChartsReady(function(){
         series("appOpened", "count_unique", "FB_ID", "this_30_days", "daily",  "Daily Uniques", "uniDays", "blue")
+    });
+
+    //Weekly uniques
+    Keen.onChartsReady(function(){
+        series("appOpened", "count_unique", "FB_ID", "this_8_weeks", "weekly",  "Weekly Uniques", "uniWeeks", "purple")
     });
 
     //Clips played per day
