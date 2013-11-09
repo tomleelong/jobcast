@@ -1,18 +1,6 @@
-h1{
-    text-align: center;
+.container{
+    border: 1px solid red;
 }
-
-h2{
-    margin-top: 5%;
-    margin-bottom: 2%;
-    text-decoration: underline;
-}
-
-h3{
-    margin-top:6%;
-    margin-bottom:2%;
-}
-
-.img{
-    text-align: center;
+.navbar-fixed-top{
+    margin-bottom: 10px;
 }

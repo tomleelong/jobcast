@@ -14,296 +14,33 @@
     <title>Hasslehoffalytics by Keen</title>
 </head>
 <body>
-<div class= "container">
-    <div class= "row">
-        <div class= "span12"><h1>Hasslehoffalytics</h1></div>
-        <div class= img><img src="../images/hoff.jpeg"></div>
-        <div class= "span12"><h2>Time series data</h2></div>
-        <div class= "span12"><div id= "line"></div></h2></div>
-        <div class= span6>
-            <h3>Hourly uniques (appOpened)</h3>
-             <div id="uniHours"></div>
+    <div class= "navbar-fixed-top">
+        <div class= "navbar-inner">
+            <div class= "container">
+                <div class= "nav-collapse">
+                    <ul class= "nav pull-right\">
+                        <li>About</li>
+                        <li>People</li>
+                        <li>Projects</li>
+                        <li>Contact</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class= "span6">
-            <h3>Daily uniques (appOpened)</h3>
-            <div id="uniDays"></div>
-        </div>
-        <div class= "span6">
-            <h3>Weekly uniques (appOpened)</h3>
-            <div id="uniWeeks"></div>
-        </div>
-        <div class= "span6">
-            <h3>Recordings played per day (commentTableClicks)</h3>
-            <div id="clicksPerDay"></div>
-        </div>
-        <div class= "span6">
-            <h3>Fan posts per day (postButton2Clicks)</h3>
-            <div id="postsPerDay"></div>
-        </div>
-        <div class= "span6">
-            <h3>App version last 3 days (appOpened)</h3>
-            <div id="userPie"></div>
-        </div>
-<!-- ************ Start of Metrics ********** -->
-
-        <div class= "span12"><h2>Activity counts this month</h2></div>
-        <!--        <div class= "span4">
-            <h3>Main table clicks</h3>
-            <div id="tableClicks"></div>
-        </div>
-        <div class= "span4">
-            <h3>Arrow clicks</h3>
-            <div id="arrowClicks"></div>
-        </div>-->
-        <div class= "span4">
-            <h3>Recordings played</h3>
-            <div id="commentClicks"></div>
-        </div>
-<!--        <div class= "span4">
-            <h3>Record button clicks</h3>
-            <div id="recorded"></div>
-        </div>
-        <div class= "span4">
-            <h3>Post 1 button clicks</h3>
-            <div id="almost"></div>
-        </div>
-        <div class= "span4">
-            <h3>Post button 2 clicks (actual posts)</h3>
-            <div id="posted"></div>
-        </div>
-        <div class= "span4">
-            <h3>Direct message clicks</h3>
-            <div id="dm"></div>
-        </div>
-        <div class= "span4">
-            <h3>Reply button clicks</h3>
-            <div id="reply"></div>
-        </div>
-        <div class= "span4">
-            <h3>Sub reply clicks</h3>
-            <div id="subReply"></div>
-        </div>
-        <div class= "span4">
-            <h3>Refresh button clicks</h3>
-            <div id="refresh"></div>
-        </div>
-        <div class= "span4">
-            <h3>Main table deletes</h3>
-            <div id="delete"></div>
-        </div>-->
     </div>
-</div>
+    <div class="container">
+        <div class= "hero-unit">
+            <div class= "page-header">
+                <h1>Welcome!</h1>
+            </div>
+        </div>
+    </div>
+    <div class= "container">
+        <div class= "carousel">
+            <div class= "carousel-inner">
 
-
-
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script> Keen.configure("50a3e111384331363f000003", "3832b5a1f8984edebc8b337a3143cb97")</script>
-<script>
-    //Series. This function defines the arguments for the keen series, which are displayed as line charts
-    Keen.onChartsReady(function(){
-            //Create a Metric for the number of logins each user has performed in the last 7 days.
-            var myMetric = new Keen.Metric("appOpened", {
-                analysisType: "count_unique",
-                timeframe: "this_3_days",
-                groupBy: "22version",
-                targetProperty: "FB_ID"
-            });
-            //Create a PieChart visualization for that Metric.
-        myMetric.addFilter("FB_ID", "ne", "418133");//Shahsi
-        myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
-        myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
-        myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        //myMetric.addFilter("FB_ID", "ne", null);//Before ID
-        myMetric.addFilter("FB_ID", "ne", "100005051853274");//SJ other
-        myMetric.addFilter("FB_ID", "ne", "100003964169036");//Tim Short
-
-            var myPieChart = new Keen.PieChart(myMetric, {
-                height: 300,
-                width: 600,
-                title: "Activity by version"
-            });
-            //Draw the visualization into a div
-            myPieChart.draw(document.getElementById("userPie"));
-
-        });
-    //Series. This function defines the arguments for the keen series, which are displayed as line charts
-    function series(metricName, analysisType, targetProperty, timeFrame, interval,  label, divName, color){
-        var mySeries = new Keen.Series(metricName, {
-            analysisType: analysisType,
-            targetProperty:targetProperty,
-            timeframe: timeFrame,
-            interval: interval
-        });
-        mySeries.addFilter("FB_ID", "ne", "418133");//Shahsi
-        mySeries.addFilter("FB_ID", "ne", "10214823");//Tom
-        mySeries.addFilter("FB_ID", "ne", "100004390926045");//Rob
-        mySeries.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        //mySeries.addFilter("FB_ID", "ne", null);//Before ID
-        mySeries.addFilter("FB_ID", "ne", "100005051853274");//SJ other
-        mySeries.addFilter("FB_ID", "ne", "100003964169036");//Tim Short
-        //mySeries.addFilter("FB_ID", "eq", "1503606443");//Beatrice
-
-
-        Keen.onChartsReady(function(){
-            mySeries.draw(document.getElementById(divName), {
-                label: label,
-                color: color,
-                chartAreaLeft: "5%",
-                chartAreaRight: "5%",
-                chartAreaWidth: "60%",
-                chartAreaHeight: "75%"
-            });
-        });
-    };
-    //Hourly uniques
-    Keen.onChartsReady(function(){
-        series("appOpened" , "count_unique", "FB_ID", "this_24_hours", "hourly",  "Hourly Uniques", "uniHours", "orange")
-    });
-
-    //Daily uniques
-    Keen.onChartsReady(function(){
-        series("appOpened", "count_unique", "FB_ID", "this_30_days", "daily",  "Daily Uniques", "uniDays", "blue")
-    });
-
-    //Weekly uniques
-    Keen.onChartsReady(function(){
-        series("appOpened", "count_unique", "FB_ID", "this_8_weeks", "weekly",  "Weekly Uniques", "uniWeeks", "purple")
-    });
-
-    //Clips played per day
-    Keen.onChartsReady(function(){
-        series(("commentTableClick"), "count", null, "this_30_days", "daily",  "Daily Activity", "clicksPerDay", "green")
-    });
-
-    Keen.onChartsReady(function(){
-        series("postButton2Click", "count", null, "this_30_days", "daily",  "Daily Posts", "postsPerDay", "red")
-    });
-
-    //Metrics. This function defines the arguments for keen metrics, which are displayed as big ass numbers
-    function metrics(metricName, target, analysisType, label, divName){
-        var myMetric = new Keen.Metric(metricName, {
-            analysisType: analysisType,
-            targetProperty: target,
-            timeframe: "this_30_days"
-        });
-        myMetric.addFilter("FB_ID", "ne", "418133");//Shahsi
-        myMetric.addFilter("FB_ID", "ne", "10214823");//Tom
-        myMetric.addFilter("FB_ID", "ne", "100004390926045");//Rob
-        myMetric.addFilter("FB_ID", "ne", "100003863861181");//Sam Jones
-        //myMetric.addFilter("FB_ID", "ne", null);//Before ID
-        myMetric.addFilter("FB_ID", "ne", "100005051853274");//SJ other
-        myMetric.addFilter("FB_ID", "ne", "100003964169036");//Tim Short
-        //myMetric.addFilter("FB_ID", "eq", "1503606443");//Beatrice
-
-
-        var myNumberVisualization = new Keen.Number(myMetric, {
-            height: "160px",
-            width: "260px",
-            label: label
-        });
-
-        Keen.onChartsReady(function(){
-            myNumberVisualization.draw(document.getElementById(divName));
-        });
-    };
-
-    //These numbers show different button clicks (in both total count and number of uniques)
-
-    /* //Main table
-    Keen.onChartsReady(function() {
-        metrics("TableViewClick", null, "count", "total clicks", "tableClicks");
-    });
-
-    Keen.onChartsReady(function() {
-        metrics("TableViewClick", "FB_ID", "count_unique", "uniques", "tableClicks");
-    });
-
-    //Row Arrow
-    Keen.onChartsReady(function() {
-        metrics("arrowClick", null, "count", "total clicks", "arrowClicks");
-    });
-    Keen.onChartsReady(function() {
-        metrics("arrowClick", "FB_ID", "count_unique", "uniques", "arrowClicks");
-    });*/
-
-    //Conversation Table Clicks
-    Keen.onChartsReady(function() {
-        metrics("commentTableClick", null, "count", "total clicks", "commentClicks");
-    });
-    Keen.onChartsReady(function() {
-        metrics("commentTableClick", "FB_ID", "count_unique", "uniques", "commentClicks");
-    });
-
-    /*//Record button clicks
-    Keen.onChartsReady(function() {
-        metrics("recordButtonClick", null, "count", "total clicks", "recorded");
-    });
-    Keen.onChartsReady(function() {
-        metrics("recordButtonClick", "FB_ID", "count_unique", "uniques", "recorded");
-    });
-
-    //Post button1 clicks
-    Keen.onChartsReady(function() {
-        metrics("postButtonClick", null, "count", "total clicks", "almost");
-    });
-    Keen.onChartsReady(function() {
-        metrics("postButtonClick", "FB_ID", "count_unique", "uniques", "almost");
-    });
-
-    //Post button2 clicks
-    Keen.onChartsReady(function() {
-        metrics("postButton2Click", null, "count", "total clicks", "posted");
-    });
-    Keen.onChartsReady(function() {
-        metrics("postButton2Click", "FB_ID", "count_unique", "uniques", "posted");
-    });
-
-    //Direct message clicks
-    Keen.onChartsReady(function() {
-        metrics("DMClick", null, "count", "total clicks", "dm");
-    });
-    Keen.onChartsReady(function() {
-        metrics("DMClick", "FB_ID", "count_unique", "uniques", "dm");
-    });
-
-    //Reply clicks
-    Keen.onChartsReady(function() {
-        metrics("replyClick", null, "count", "total clicks", "reply");
-    });
-    Keen.onChartsReady(function() {
-        metrics("replyClick", "FB_ID", "count_unique", "uniques", "reply");
-    });
-
-    //Sub Reply clicks
-    Keen.onChartsReady(function() {
-        metrics("subReplyClick", null, "count", "total clicks", "subReply");
-    });
-    Keen.onChartsReady(function() {
-        metrics("subReplyClick", "FB_ID", "count_unique", "uniques", "subReply");
-    });
-
-    //Refresh button clicks
-    Keen.onChartsReady(function() {
-        metrics("refreshClick", null, "count", "total clicks", "refresh");
-    });
-    Keen.onChartsReady(function() {
-        metrics("refreshClick", "FB_ID", "count_unique", "uniques", "refresh");
-    });
-
-    //Record tab clicks
-    Keen.onChartsReady(function() {
-        metrics("appOpened", null, "count", "total clicks", "recordTab");
-    });
-
-    //Deletes
-    Keen.onChartsReady(function() {
-        metrics("deleteTableView", null, "count", "total clicks", "delete");
-    });
-    Keen.onChartsReady(function() {
-        metrics("deleteTableView", "FB_ID", "count_unique", "uniques", "delete");
-    });*/
-</script>
+            </div>
+        </div>
+    </div>
+    <div class= img><img src="../images/hoff.jpeg"></div>
 </body>
-</html>
